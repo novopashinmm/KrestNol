@@ -10,6 +10,8 @@ namespace Krestiki
 {
     public partial class KrestikiGame : Form
     {
+        private bool _twoPlayers;
+
         private List<PictureBox> _list;
 
         private int _i;
@@ -32,11 +34,13 @@ namespace Krestiki
             // Все нарисованные X или O вносим в список
             _list = FindElements();
 
-            CheckFinish(sender, e);
+            if (CheckFinish(sender, e))
+                return;
 
             _i++;
 
-            ComputerHod();
+            if (!_twoPlayers)
+                ComputerHod();
         }
 
         /// <summary>
@@ -56,7 +60,7 @@ namespace Krestiki
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CheckFinish(object sender, MouseEventArgs e)
+        private bool CheckFinish(object sender, MouseEventArgs e)
         {
             // Флаг нужный для выхода из внешнего цикла
             bool flagBreak = false;
@@ -86,6 +90,7 @@ namespace Krestiki
                             {
                                 CreateFinishLines(p1, p2, p3, "V");
                                 EndGame(sender, e, elKorN);
+                                return true;
                                 flagBreak = true;
                                 break;
                             }
@@ -98,6 +103,7 @@ namespace Krestiki
                             {
                                 CreateFinishLines(p1, p2, p3, "G");
                                 EndGame(sender, e, elKorN);
+                                return true;
                                 flagBreak = true;
                                 break;
                             }
@@ -117,6 +123,7 @@ namespace Krestiki
                             {
                                 CreateFinishLines(p1, p2, p3, "D");
                                 EndGame(sender, e, elKorN);
+                                return true;
                                 flagBreak = true;
                                 break;
                             }
@@ -128,8 +135,7 @@ namespace Krestiki
                         break;
                 }
             }
-
-            
+            return false;
         }
 
         public void EndGame(object sender, EventArgs args, string elKorN)
@@ -214,6 +220,7 @@ namespace Krestiki
             {
                 Controls.Remove(control);
             }
+            _i = 0;
         }
 
         /// <summary>
@@ -262,9 +269,20 @@ namespace Krestiki
             // Все нарисованные X или O вносим в список
             _list = FindElements();
 
-            CheckFinish(sender, e);
+            if (CheckFinish(sender, e))
+                return;
 
             _i++;
+        }
+
+        private void игрокаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _twoPlayers = true;
+        }
+
+        private void противКомпьютераToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _twoPlayers = false;
         }
     }
 }

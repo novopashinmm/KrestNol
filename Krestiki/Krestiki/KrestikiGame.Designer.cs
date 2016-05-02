@@ -34,6 +34,9 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Pole = new System.Windows.Forms.PictureBox();
+            this.режимИгрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.игрокаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.противКомпьютераToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pole)).BeginInit();
             this.SuspendLayout();
@@ -41,7 +44,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.менюToolStripMenuItem});
+            this.менюToolStripMenuItem,
+            this.режимИгрыToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(345, 24);
@@ -61,19 +65,19 @@
             // новаяИграToolStripMenuItem
             // 
             this.новаяИграToolStripMenuItem.Name = "новаяИграToolStripMenuItem";
-            this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.новаяИграToolStripMenuItem.Text = "Новая игра";
             this.новаяИграToolStripMenuItem.Click += new System.EventHandler(this.новаяИграToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(128, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
@@ -86,6 +90,29 @@
             this.Pole.TabIndex = 0;
             this.Pole.TabStop = false;
             this.Pole.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Pole_MouseClick);
+            // 
+            // режимИгрыToolStripMenuItem
+            // 
+            this.режимИгрыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.игрокаToolStripMenuItem,
+            this.противКомпьютераToolStripMenuItem});
+            this.режимИгрыToolStripMenuItem.Name = "режимИгрыToolStripMenuItem";
+            this.режимИгрыToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.режимИгрыToolStripMenuItem.Text = "Режим игры";
+            // 
+            // игрокаToolStripMenuItem
+            // 
+            this.игрокаToolStripMenuItem.Name = "игрокаToolStripMenuItem";
+            this.игрокаToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.игрокаToolStripMenuItem.Text = "2 игрока";
+            this.игрокаToolStripMenuItem.Click += new System.EventHandler(this.игрокаToolStripMenuItem_Click);
+            // 
+            // противКомпьютераToolStripMenuItem
+            // 
+            this.противКомпьютераToolStripMenuItem.Name = "противКомпьютераToolStripMenuItem";
+            this.противКомпьютераToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.противКомпьютераToolStripMenuItem.Text = "Против компьютера";
+            this.противКомпьютераToolStripMenuItem.Click += new System.EventHandler(this.противКомпьютераToolStripMenuItem_Click);
             // 
             // KrestikiGame
             // 
@@ -117,6 +144,9 @@
         private System.Windows.Forms.ToolStripMenuItem новаяИграToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem режимИгрыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem игрокаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem противКомпьютераToolStripMenuItem;
     }
 }
 
