@@ -95,6 +95,9 @@
             this.Controls.Add(this.Pole);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(353, 356);
+            this.MinimumSize = new System.Drawing.Size(353, 356);
             this.Name = "KrestikiGame";
             this.Text = "Крестики Нолики";
             this.menuStrip1.ResumeLayout(false);
