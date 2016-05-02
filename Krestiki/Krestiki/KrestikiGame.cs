@@ -245,11 +245,14 @@ namespace Krestiki
 
         private void ComputerHod()
         {
+            List<PictureBox> list = FindElements();
+            if (list.Count == 9)
+                return;
             Random rand = new Random();
             int rX = rand.Next(40, 200);
             int rY = rand.Next(40, 200);
-            List<PictureBox> list = FindElements();
             bool rNext = list.Count == 0;
+            int w = 0;
             while (!rNext)
             {
                 rNext = !list.Any(x => x.Location.X/80 == rX/80 && x.Location.Y/80 == rY/80);
@@ -257,7 +260,22 @@ namespace Krestiki
                 {
                     rX = rand.Next(0, 240);
                     rY = rand.Next(0, 240);
+                    if (w > 1)
+                    {
+                        for (int ii = 0; ii < 3; ii++)
+                        {
+                            for (int jj = 0; jj < 3; jj++)
+                            {
+                                if (!list.Any(x => x.Location.X/80 == ii && x.Location.Y/80 == jj))
+                                {
+                                    rX = (ii + 1)*80 - 2;
+                                    rY = (jj + 1)*80 - 2;
+                                }
+                            }
+                        }
+                    }
                 }
+                w++;
             }
 
             object sender = this.Pole;
