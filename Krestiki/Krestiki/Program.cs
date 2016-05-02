@@ -16,7 +16,10 @@ namespace Krestiki
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new KrestikiGame());
+            KrestikiGame form = new KrestikiGame();
+            Game game = new Game(form);
+            Application.Run(form);
+            
         }
     }
 }

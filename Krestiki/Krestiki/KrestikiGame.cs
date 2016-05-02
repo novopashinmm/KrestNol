@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Krestiki.Properties;
 
@@ -18,17 +19,45 @@ namespace Krestiki
             _list = new List<PictureBox>();
         }
 
-        private void Pole_MouseClick(object sender, MouseEventArgs e)
+        public List<PictureBox> FindElements()
         {
-            // Определяем что будем рисовать X или O
-            var bitmap = _i%2 == 0 ? Resources.Krest : Resources.Nolik;
+            return (from object control in Controls where control.GetType().ToString().Contains("PictureBox") where ((PictureBox)control).Name.Contains("El") select control as PictureBox).ToList();
+        }
 
+        public void Pole_MouseClick(object sender, MouseEventArgs e)
+        {
             // Рисуем X или O
-            CreateXorO(sender, e, bitmap);
+            CreateXorO(sender, e, Bitmap);
 
             // Все нарисованные X или O вносим в список
-            _list = (from object control in Controls where control.GetType().ToString().Contains("PictureBox") where ((PictureBox) control).Name.Contains("El") select control as PictureBox).ToList();
+            _list = FindElements();
 
+            CheckFinish(sender, e);
+
+            _i++;
+
+            ComputerHod();
+        }
+
+        /// <summary>
+        /// Определяем что будем рисовать X или O
+        /// </summary>
+        private Bitmap Bitmap
+        {
+            get
+            {
+                var bitmap = _i%2 == 0 ? Resources.Krest : Resources.Nolik;
+                return bitmap;
+            }
+        }
+
+        /// <summary>
+        /// Проверка на выигрыш
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckFinish(object sender, MouseEventArgs e)
+        {
             // Флаг нужный для выхода из внешнего цикла
             bool flagBreak = false;
 
@@ -77,9 +106,14 @@ namespace Krestiki
                             // o o x
                             // o x o
                             // x o o
-                            var pWithMinX = p1.Location.X < p2.Location.X && p1.Location.X < p3.Location.X ? p1.Location : p2.Location.X < p3.Location.X ? p2.Location : p3.Location;
-                            var pWithMaxX = p1.Location.X > p2.Location.X && p1.Location.X > p3.Location.X ? p1.Location : p2.Location.X > p3.Location.X ? p2.Location : p3.Location;
-                                if (p1X != p2X && p1Y != p2Y && p1X != p3X && p1Y != p3Y && p2X != p3X && p2Y != p3Y && pWithMinX.Y / 80 != 1 && pWithMaxX.Y/80 != 1)
+                            var pWithMinX = p1.Location.X < p2.Location.X && p1.Location.X < p3.Location.X
+                                ? p1.Location
+                                : p2.Location.X < p3.Location.X ? p2.Location : p3.Location;
+                            var pWithMaxX = p1.Location.X > p2.Location.X && p1.Location.X > p3.Location.X
+                                ? p1.Location
+                                : p2.Location.X > p3.Location.X ? p2.Location : p3.Location;
+                            if (p1X != p2X && p1Y != p2Y && p1X != p3X && p1Y != p3Y && p2X != p3X && p2Y != p3Y &&
+                                pWithMinX.Y/80 != 1 && pWithMaxX.Y/80 != 1)
                             {
                                 CreateFinishLines(p1, p2, p3, "D");
                                 EndGame(sender, e, elKorN);
@@ -95,7 +129,7 @@ namespace Krestiki
                 }
             }
 
-            _i++;
+            
         }
 
         public void EndGame(object sender, EventArgs args, string elKorN)
@@ -195,6 +229,42 @@ namespace Krestiki
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void KrestikiGame_Load(object sender, EventArgs e)
+        {
+            ComputerHod();
+        }
+
+        private void ComputerHod()
+        {
+            Random rand = new Random();
+            int rX = rand.Next(40, 200);
+            int rY = rand.Next(40, 200);
+            List<PictureBox> list = FindElements();
+            bool rNext = list.Count == 0;
+            while (!rNext)
+            {
+                rNext = !list.Any(x => x.Location.X/80 == rX/80 && x.Location.Y/80 == rY/80);
+                if (!rNext)
+                {
+                    rX = rand.Next(0, 240);
+                    rY = rand.Next(0, 240);
+                }
+            }
+
+            object sender = this.Pole;
+            MouseEventArgs e = new MouseEventArgs(MouseButtons.Left, 1, rX, rY, 0);
+
+            // Рисуем X или O
+            CreateXorO(sender, e, Bitmap);;
+
+            // Все нарисованные X или O вносим в список
+            _list = FindElements();
+
+            CheckFinish(sender, e);
+
+            _i++;
         }
     }
 }
