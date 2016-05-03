@@ -127,7 +127,6 @@
             this.MinimumSize = new System.Drawing.Size(353, 356);
             this.Name = "KrestikiGame";
             this.Text = "Крестики Нолики";
-            this.Load += new System.EventHandler(this.KrestikiGame_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pole)).EndInit();

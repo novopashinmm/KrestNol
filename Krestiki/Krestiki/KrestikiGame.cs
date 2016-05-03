@@ -238,11 +238,6 @@ namespace Krestiki
             Close();
         }
 
-        private void KrestikiGame_Load(object sender, EventArgs e)
-        {
-            ComputerHod();
-        }
-
         private void ComputerHod()
         {
             List<PictureBox> list = FindElements();
@@ -296,11 +291,13 @@ namespace Krestiki
         private void игрокаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _twoPlayers = true;
+            новаяИграToolStripMenuItem_Click(sender, e);
         }
 
         private void противКомпьютераToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _twoPlayers = false;
+            новаяИграToolStripMenuItem_Click(sender, e);
         }
     }
 }
