@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using Krestiki.Properties;
 
@@ -62,9 +61,6 @@ namespace Krestiki
         /// <param name="e"></param>
         private bool CheckFinish(object sender, MouseEventArgs e)
         {
-            // Флаг нужный для выхода из внешнего цикла
-            bool flagBreak = false;
-
             // В одной итерации проверяются крестики на выигрыш в другом нолики
             for (int n = 0; n < 2; n++)
             {
@@ -91,8 +87,6 @@ namespace Krestiki
                                 CreateFinishLines(p1, p2, p3, "V");
                                 EndGame(sender, e, elKorN);
                                 return true;
-                                flagBreak = true;
-                                break;
                             }
                             // Условие победы если подряд 3 элемента и они находятся на разных вертикалях
                             // x x x
@@ -104,8 +98,6 @@ namespace Krestiki
                                 CreateFinishLines(p1, p2, p3, "G");
                                 EndGame(sender, e, elKorN);
                                 return true;
-                                flagBreak = true;
-                                break;
                             }
 
                             // Условие победы если подряд 3 диагональных элемента
@@ -124,20 +116,20 @@ namespace Krestiki
                                 CreateFinishLines(p1, p2, p3, "D");
                                 EndGame(sender, e, elKorN);
                                 return true;
-                                flagBreak = true;
-                                break;
                             }
                         }
-                        if (flagBreak)
-                            break;
                     }
-                    if (flagBreak)
-                        break;
                 }
             }
             return false;
         }
 
+        /// <summary>
+        /// Проверка на окончание игры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        /// <param name="elKorN"></param>
         public void EndGame(object sender, EventArgs args, string elKorN)
         {
             if (DialogResult.OK == MessageBox.Show(elKorN == "K" ? "Поздравляем! Победили крестики!" : "Поздравляем! Победили нолики!"))
@@ -233,11 +225,13 @@ namespace Krestiki
             return listLines;
         }
 
+        // Выход
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        // эмуляция хода компьютера
         private void ComputerHod()
         {
             List<PictureBox> list = FindElements();
@@ -255,6 +249,7 @@ namespace Krestiki
                 {
                     rX = rand.Next(0, 240);
                     rY = rand.Next(0, 240);
+                    // этот код нужен если долго не могут подобраться нужные значения
                     if (w > 1)
                     {
                         for (int ii = 0; ii < 3; ii++)
@@ -273,11 +268,11 @@ namespace Krestiki
                 w++;
             }
 
-            object sender = this.Pole;
+            object sender = Pole;
             MouseEventArgs e = new MouseEventArgs(MouseButtons.Left, 1, rX, rY, 0);
 
             // Рисуем X или O
-            CreateXorO(sender, e, Bitmap);;
+            CreateXorO(sender, e, Bitmap);
 
             // Все нарисованные X или O вносим в список
             _list = FindElements();
@@ -288,12 +283,14 @@ namespace Krestiki
             _i++;
         }
 
+        // Режим игры 2 игрока
         private void игрокаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _twoPlayers = true;
             новаяИграToolStripMenuItem_Click(sender, e);
         }
 
+        // Режим против компьютера
         private void противКомпьютераToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _twoPlayers = false;
